@@ -5,21 +5,22 @@ const path = require('path');
 
 const app = express();
 
-// CORS configuration
-const corsOptions = {
-  origin: ['https://benevolent-biscochitos-8f4a30.netlify.app', 'http://localhost:3000'],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  optionsSuccessStatus: 200
-};
+// Enable CORS for all routes
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://benevolent-biscochitos-8f4a30.netlify.app');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  
+  next();
+});
 
-// Middleware
-app.use(cors(corsOptions));
-
-// Add preflight handler for all routes
-app.options('*', cors(corsOptions));
-
+// Parse JSON bodies
 app.use(express.json());
 
 // Health check endpoint
