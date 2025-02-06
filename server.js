@@ -1,22 +1,22 @@
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
 const path = require('path');
 
 const app = express();
 
-// Enable CORS for all routes
+// CORS handling
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://benevolent-biscochitos-8f4a30.netlify.app');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  
-  // Handle preflight requests
+  // Allow requests from your frontend domain
+  res.setHeader('Access-Control-Allow-Origin', 'https://benevolent-biscochitos-8f4a30.netlify.app');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+  // Handle preflight
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    return res.sendStatus(200);
   }
-  
+
   next();
 });
 
