@@ -4,30 +4,6 @@ const path = require('path');
 
 const app = express();
 
-// CORS handling
-app.use((req, res, next) => {
-  const allowedOrigins = [
-    'https://benevolent-biscochitos-8f4a30.netlify.app',
-    'http://localhost:3000'
-  ];
-  
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-  
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-
-  // Handle preflight
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-
-  next();
-});
-
 // Parse JSON bodies
 app.use(express.json());
 
