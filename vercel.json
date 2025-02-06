@@ -15,17 +15,22 @@
         "Access-Control-Allow-Origin": "https://benevolent-biscochitos-8f4a30.netlify.app",
         "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
-        "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization"
+        "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization",
+        "Access-Control-Max-Age": "86400"
       }
     },
     {
       "src": "/(.*)",
-      "dest": "server.js"
+      "dest": "server.js",
+      "headers": {
+        "Access-Control-Allow-Origin": "https://benevolent-biscochitos-8f4a30.netlify.app"
+      }
     }
   ],
   "env": {
     "NODE_ENV": "production",
     "FRONTEND_URL": "https://benevolent-biscochitos-8f4a30.netlify.app",
+    "BACKEND_URL": "https://sedl2.vercel.app",
     "DB_HOST": "b1wim3sym5dlhogzv3u7-mysql.services.clever-cloud.com",
     "DB_USER": "uhn5uoqvwjdlnqac",
     "DB_PASSWORD": "UMpR3WsdEjiYrJUzPwwR",

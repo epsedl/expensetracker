@@ -7,14 +7,19 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'https://benevolent-biscochitos-8f4a30.netlify.app',
+  origin: ['https://benevolent-biscochitos-8f4a30.netlify.app', 'http://localhost:3000'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  optionsSuccessStatus: 200
 };
 
 // Middleware
 app.use(cors(corsOptions));
+
+// Add preflight handler for all routes
+app.options('*', cors(corsOptions));
+
 app.use(express.json());
 
 // Health check endpoint
