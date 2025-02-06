@@ -1,8 +1,21 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
+
+// CORS configuration
+const corsOptions = {
+  origin: 'https://benevolent-biscochitos-8f4a30.netlify.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
 
 // Parse JSON bodies
 app.use(express.json());

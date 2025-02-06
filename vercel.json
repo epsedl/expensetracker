@@ -8,30 +8,8 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "server.js",
-      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-      "headers": {
-        "Access-Control-Allow-Origin": "https://benevolent-biscochitos-8f4a30.netlify.app",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-        "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Authorization",
-        "Access-Control-Allow-Credentials": "true"
-      }
-    },
-    {
       "src": "/(.*)",
       "dest": "server.js"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production",
-    "FRONTEND_URL": "https://benevolent-biscochitos-8f4a30.netlify.app",
-    "BACKEND_URL": "https://sedl2.vercel.app",
-    "DB_HOST": "b1wim3sym5dlhogzv3u7-mysql.services.clever-cloud.com",
-    "DB_USER": "uhn5uoqvwjdlnqac",
-    "DB_PASSWORD": "UMpR3WsdEjiYrJUzPwwR",
-    "DB_NAME": "b1wim3sym5dlhogzv3u7",
-    "DB_PORT": "3306",
-    "JWT_SECRET": "your-secret-key-here"
-  }
+  ]
 }
