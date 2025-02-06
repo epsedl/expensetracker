@@ -2,12 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const fs = require('fs');
-
-// Create uploads directory if not in Vercel environment
-if (process.env.NODE_ENV !== 'production') {
-  !fs.existsSync('./uploads') && fs.mkdirSync('./uploads');
-}
 
 const app = express();
 
@@ -23,10 +17,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Only use static uploads directory in development
-if (process.env.NODE_ENV !== 'production') {
-  app.use('/uploads', express.static('uploads'));
-}
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
@@ -38,19 +32,24 @@ app.use('/api/transport-modes', require('./routes/transportModes'));
 
 // Error handler
 app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).json({ error: err.message });
+  console.error('Error:', err);
+  res.status(500).json({ 
+    error: 'Internal server error',
+    message: process.env.NODE_ENV === 'development' ? err.message : undefined
+  });
 });
 
-// Start server only in development
+// Handle 404
+app.use((req, res) => {
+  res.status(404).json({ error: 'Not found' });
+});
+
+// Start server in development
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
-    console.log('\x1b[32m%s\x1b[0m', `✓ Server is running on port ${PORT}`);
-    console.log('\x1b[36m%s\x1b[0m', `✓ API endpoint: http://localhost:${PORT}/api`);
-    console.log('\x1b[33m%s\x1b[0m', '✓ Press CTRL+C to stop the server');
+    console.log(`Server running on port ${PORT}`);
   });
 }
 
-// Export app for Vercel
 module.exports = app;
